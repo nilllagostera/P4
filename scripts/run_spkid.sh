@@ -21,7 +21,7 @@ world=others
 
 
 #WORLD_OPTS="-T 1.e-6 -N100 -m 16 "
-TRAIN_OPTS="-T 1.e-6 -N64 -m 32 -i 2" #error=11,59% y 50%
+TRAIN_OPTS="-T 1.e-6 -N64 -m 36 -i 2" #error=0.64% y 5%
 # ------------------------
 # Usage
 # ------------------------
@@ -210,7 +210,7 @@ for cmd in $*; do
        compute_$FEAT $db_final $lists/final/verif.test
      gmm_verify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm -w $world lists/final/verif.users  lists/final/verif.test lists/final/verif.test.candidates | tee $w/verif_test.log
     perl -ane 'print "$F[0]\t$F[1]\t";
-    if ($F[2] > -3.214) {print "1\n"}
+    if ($F[2] > 0.271158370971998) {print "1\n"}
     else {print "0\n"}' $w/verif_test.log | tee verif_test.log
    
    # If the command is not recognize, check if it is the name
