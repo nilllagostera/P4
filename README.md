@@ -33,14 +33,33 @@ ejercicios indicados.
   principal (`sox`, `$X2X`, `$FRAME`, `$WINDOW` y `$LPC`). Explique el significado de cada una de las 
   opciones empleadas y de sus valores.
 
+El programa sox sirve para generar una señal del formato adecuado a partir de una señal con otro formato
+El comando '$X2X' en nuestro caso como utilizamos ubunto, representa el comando sptk x2x que permite la conversión entre distintos formatos de datos.
+El comando $FRAME representa el comando 'sptk frame' que permite extraer las ventanas de la sequencia de datos amb un frame lenght de 240 i una frame period de 80.
+El comando $WINDOW representa el comando 'sptk window' nos da los detalles de la ventana. Vemos que el frame length of input es de 240, el frame length of output tambien es de 240.
+El comando $LPC representa el comando 'sptk lpc' que nos da el LPC analisis usando el metodo de Levinson-Durbin con frame length de 240 y el ordre de LPC es el que le pases por parametro.
+
 - Explique el procedimiento seguido para obtener un fichero de formato *fmatrix* a partir de los ficheros de
   salida de SPTK (líneas 45 a 47 del script `wav2lp.sh`).
+  
+Para obtener un fichero fmatrix, primero se calcula el número de columnas se calcula a partir del orden del predictor
+lineal (uno más el orden del predictor) ya que en el primer elemento del vector se almacena la ganancia de
+predicción. 
+El número de filas (igual al número de tramas) depende de la longitud de la señal, la longitud y desplazamiento de la ventana, y la cadena
+de comandos que se ejecutan para obtener la parametrización. Por eso, extraeremos la información del fichero obtenido. Lo hacemos convirtiendo la señal parametrizada a 
+texto, usando sox +fa, y contando el número de líneas, con el comando de UNIX wc -l.
+
 
   * ¿Por qué es conveniente usar este formato (u otro parecido)? Tenga en cuenta cuál es el formato de
     entrada y cuál es el de resultado.
+    
+  Los datos ya estan guardados como float32 y no como ascii, esto hace que no se tengan que convertir cada vez que se vaya a leer el fichero. Ademas una 
+  vez obtenidos las características de SPTK los cambios son solo añadir una cabecera por lo tanto hace el programa mas eficiente.
+    
 
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
+  
 
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales en escala Mel (MFCC) en su
   fichero <code>scripts/wav2mfcc.sh</code>:
