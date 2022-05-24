@@ -17,11 +17,11 @@ w=work
 name_exp=one
 db_devel=spk_8mu/speecon
 db_final=spk_8mu/sr_test
-world = users 
+world=others
 
 
-WORLD_OPTS=-"T 1.e-6 -N10 -m 5 "
-TRAIN_OPTS="-T 1.e-6 -N10 -m 5 "
+#WORLD_OPTS="-T 1.e-6 -N100 -m 16 "
+TRAIN_OPTS="-T 1.e-6 -N64 -m 32 -i 2" #error=11,59% y 50%
 # ------------------------
 # Usage
 # ------------------------
@@ -103,7 +103,7 @@ compute_lpcc() {
     shift
     for filename in $(sort $*); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
-        EXEC="wav2lpcc 8 13 $db/$filename.wav $w/$FEAT/$filename.$FEAT" #lpc, lpcc
+        EXEC="wav2lpcc 20 20 $db/$filename.wav $w/$FEAT/$filename.$FEAT" #lpc, lpcc
         echo $EXEC && $EXEC || exit 1
     done
 }
@@ -169,7 +169,7 @@ for cmd in $*; do
 	   # Implement 'trainworld' in order to get a Universal Background Model for speaker verification
 	   #
 	   # - The name of the world model will be used by gmm_verify in the 'verify' command below.
-        gmm_train  -v 1 $WORLD_OPTS -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train || exit 1
+        gmm_train  -v 1 $TRAIN_OPTS -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train || exit 1
    elif [[ $cmd == verify ]]; then
        ## @file
 	   # \TODO 
