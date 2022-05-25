@@ -6,7 +6,7 @@
 # Antonio Bonafonte, Nov. 2015
 
 ## @file
-# \TODO
+# \DONE
 # Set the proper value to variables: lists, w, name_exp and db
 # - lists:    directory with the list of signal files
 # - w:        a working directory for temporary files
@@ -86,7 +86,7 @@ fi
 # ----------------------------
 
 ## @file
-# \TODO
+# \DONE
 # Create your own features with the name compute_$FEAT(), where $FEAT is the name of the feature.
 # - Select (or change) different features, options, etc. Make you best choice and try several options.
 
@@ -141,7 +141,7 @@ for cmd in $*; do
 
    if [[ $cmd == train ]]; then
        ## @file
-	   # \TODO
+	   # \DONE
 	   # Select (or change) good parameters for gmm_train
        for dir in $db_devel/BLOCK*/SES* ; do
            name=${dir/*\/}
@@ -165,14 +165,14 @@ for cmd in $*; do
                  END {printf "nerr=%d\tntot=%d\terror_rate=%.2f%%\n", ($err, $ok+$err, 100*$err/($ok+$err))}' $w/class_${FEAT}_${name_exp}.log | tee -a $w/class_${FEAT}_${name_exp}.log
    elif [[ $cmd == trainworld ]]; then
        ## @file
-	   # \TODO
+	   # \DONE
 	   # Implement 'trainworld' in order to get a Universal Background Model for speaker verification
 	   #
 	   # - The name of the world model will be used by gmm_verify in the 'verify' command below.
         gmm_train  -v 1 $TRAIN_OPTS -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train || exit 1
    elif [[ $cmd == verify ]]; then
        ## @file
-	   # \TODO 
+	   # \DONE 
 	   # Implement 'verify' in order to perform speaker verification
 	   #
 	   # - The standard output of gmm_verify must be redirected to file $w/verif_${FEAT}_${name_exp}.log.
@@ -193,7 +193,7 @@ for cmd in $*; do
 
    elif [[ $cmd == finalclass ]]; then
        ## @file
-	   # \TODO
+	   # \DONE
 	   # Perform the final test on the speaker classification of the files in spk_ima/sr_test/spk_cls.
 	   # The list of users is the same as for the classification task. The list of files to be
 	   # recognized is lists/final/class.test
@@ -202,7 +202,7 @@ for cmd in $*; do
    
    elif [[ $cmd == finalverif ]]; then
        ## @file
-	   # \TODO
+	   # \DONE
 	   # Perform the final test on the speaker verification of the files in spk_ima/sr_test/spk_ver.
 	   # The list of legitimate users is lists/final/verif.users, the list of files to be verified
 	   # is lists/final/verif.test, and the list of users claimed by the test files is
@@ -210,7 +210,7 @@ for cmd in $*; do
        compute_$FEAT $db_final $lists/final/verif.test
      gmm_verify -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm -w $world lists/final/verif.users  lists/final/verif.test lists/final/verif.test.candidates | tee $w/verif_test.log
     perl -ane 'print "$F[0]\t$F[1]\t";
-    if ($F[2] > 0.271158370971998) {print "1\n"}
+    if ($F[2] > 0.260252456996003) {print "1\n"}
     else {print "0\n"}' $w/verif_test.log | tee verif_test.log
    
    # If the command is not recognize, check if it is the name
