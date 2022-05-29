@@ -78,6 +78,7 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
   
+  
   ![GMM_LP](https://user-images.githubusercontent.com/100692201/170885927-d52860c4-ece3-4e55-a0e0-84165e6756e4.jpeg)
 ![GMM_LPCC](https://user-images.githubusercontent.com/100692201/170885977-ac50d4ee-65a4-4b22-aa6f-b0ec343ee4d7.jpeg)
 ![GMM_MFCC](https://user-images.githubusercontent.com/100692201/170885984-bae382ba-4fe1-4a4e-b373-e8b68642437a.jpeg)
@@ -90,6 +91,7 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
       plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/mfcc/SES011.gmm work/mfcc/BLOCK01/SES011/*
     ```
   + ¿Cuál de ellas le parece que contiene más información?
+ 
  En nuestro caso podemos observar que la que contiene mas informacion es la de mfcc seguida de lpcc ya que los puntos estan menos correlados. En el caso de lp vemos 
  que los puntos forman como una tendencia lineal lo que significa que estan mas correlados.
 
@@ -101,11 +103,13 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
   | &rho;<sub>x</sub>[2,3] |   -0,814   |  0,312    |   0,359   |
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
+  
   Estos resultado coinciden mas o menos con las graficas ya que vemos que mfcc y lpcc tienen valores muy cercanos a cero, es decir poco correlados mientras que para 
   mfcc, obtenemos un valor bastante alejado de 0 lo que significa que esta mucho mas correlado.
   
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
-- Para lpcc y mfcc los valores mas usados son entre 15 y 18 mientras que para lp se suelen usar unos 9 parametros.
+
+Para lpcc y mfcc los valores mas usados son entre 15 y 18 mientras que para lp se suelen usar unos 9 parametros.
 
 ### Entrenamiento y visualización de los GMM.
 
@@ -113,6 +117,7 @@ Complete el código necesario para entrenar modelos GMM.
 
 - Inserte una gráfica que muestre la función de densidad de probabilidad modelada por el GMM de un locutor
   para sus dos primeros coeficientes de MFCC.
+  
   ![GMM_LPCC_loc2](https://user-images.githubusercontent.com/100692201/170891396-6dc15439-0076-4637-8fb4-358aa706b334.jpeg)
 
   
@@ -123,6 +128,7 @@ Complete el código necesario para entrenar modelos GMM.
   ![GMM_LPCC](https://user-images.githubusercontent.com/100692201/170891407-ee0ba5a8-0667-44ce-a371-89739cefbf8a.jpeg)
   
   ![GMM_LPCC_loc2](https://user-images.githubusercontent.com/100692201/170891397-fb862e58-5345-46c8-a974-fb462c2ea918.jpeg)
+  
 Como podemos observar las distribuciones son bastante parecidas pero aun asi cada modelo de GMM se ajusta perfectamente a cada locutor
 
 ### Reconocimiento del locutor.
@@ -131,6 +137,9 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
 
 - Inserte una tabla con la tasa de error obtenida en el reconocimiento de los locutores de la base de datos
   SPEECON usando su mejor sistema de reconocimiento para los parámetros LP, LPCC y MFCC.
+  |                        | LP   | LPCC | MFCC |
+  |------------------------|:----:|:----:|:----:|
+  |Tasa de error |   9,3%   |  0,64%    |   0,76%   |
 
 ### Verificación del locutor.
 
@@ -140,6 +149,9 @@ Complete el código necesario para realizar verificación del locutor y optimice
   de verificación de SPEECON. La tabla debe incluir el umbral óptimo, el número de falsas alarmas y de
   pérdidas, y el score obtenido usando la parametrización que mejor resultado le hubiera dado en la tarea
   de reconocimiento.
+  |                     SISTEMA   | UMBRAL   | FALSAS ALARMAS | PERDIDAS | SCORE |
+  |------------------------|:----:|:----:|:----:|:----:|
+  | LPCC |  0.26    |  0.0020    |   0.0320   |  5.0|
  
 ### Test final
 
