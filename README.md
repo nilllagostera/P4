@@ -92,8 +92,8 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
     ```
   + ¿Cuál de ellas le parece que contiene más información?
  
- En nuestro caso podemos observar que la que contiene mas informacion es la de mfcc seguida de lpcc ya que los puntos estan menos correlados. En el caso de lp vemos 
- que los puntos forman como una tendencia lineal lo que significa que estan mas correlados.
+ En nuestro caso podemos observar que la que contiene más información es la de mfcc seguida de lpcc ya que los puntos estan menos correlados. En el caso de lp vemos 
+ que los puntos forman como una tendencia lineal lo que significa que estan más correlados.
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
@@ -104,12 +104,12 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
   
-  Estos resultado coinciden mas o menos con las graficas ya que vemos que mfcc y lpcc tienen valores muy cercanos a cero, es decir poco correlados mientras que para 
-  mfcc, obtenemos un valor bastante alejado de 0 lo que significa que esta mucho mas correlado.
+  Estos resultado coinciden mas o menos con las gráficas ya que vemos que mfcc y lpcc tienen valores muy cercanos a cero, es decir poco correlados mientras que para 
+  mfcc, obtenemos un valor bastante alejado de 0 lo que significa que esta mucho más correlado.
   
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
 
-Para lpcc y mfcc los valores mas usados son entre 15 y 18 mientras que para lp se suelen usar unos 9 parametros.
+Para lpcc y mfcc los valores más usados son entre 15 y 18 mientras que para lp se suelen usar unos 9 parámetros.
 
 ### Entrenamiento y visualización de los GMM.
 
@@ -129,7 +129,7 @@ Complete el código necesario para entrenar modelos GMM.
   
   ![GMM_LPCC_loc2](https://user-images.githubusercontent.com/100692201/170891397-fb862e58-5345-46c8-a974-fb462c2ea918.jpeg)
   
-Como podemos observar las distribuciones son bastante parecidas pero aun asi cada modelo de GMM se ajusta perfectamente a cada locutor
+Como podemos observar las distribuciones son bastante parecidas pero aun así cada modelo de GMM se ajusta perfectamente a cada locutor.
 
 ### Reconocimiento del locutor.
 
