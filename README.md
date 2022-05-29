@@ -36,8 +36,10 @@ ejercicios indicados.
 El programa sox sirve para generar una señal del formato adecuado a partir de una señal con otro formato
 El comando '$X2X' en nuestro caso como utilizamos ubunto, representa el comando sptk x2x que permite la conversión entre distintos formatos de datos.
 El comando $FRAME representa el comando 'sptk frame' que permite extraer las ventanas de la sequencia de datos amb un frame lenght de 240 i una frame period de 80.
-El comando $WINDOW representa el comando 'sptk window' nos da los detalles de la ventana. Vemos que el frame length of input es de 240, el frame length of output tambien es de 240.
-El comando $LPC representa el comando 'sptk lpc' que nos da el LPC analisis usando el metodo de Levinson-Durbin con frame length de 240 y el ordre de LPC es el que le pases por parametro.
+El comando $WINDOW representa el comando 'sptk window' nos da los detalles de la ventana. Vemos que el frame length of input es de 240, el frame length of output 
+tambien es de 240.
+El comando $LPC representa el comando 'sptk lpc' que nos da el LPC analisis usando el metodo de Levinson-Durbin con frame length de 240 y el ordre de LPC es el que le 
+pases por parametro.
 
 - Explique el procedimiento seguido para obtener un fichero de formato *fmatrix* a partir de los ficheros de
   salida de SPTK (líneas 45 a 47 del script `wav2lp.sh`).
@@ -83,23 +85,27 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
     ```
-     plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/lp/SES011.gmm work/lp/BLOCK01/SES011/*
+      plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/lp/SES011.gmm work/lp/BLOCK01/SES011/*
       plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/lpcc/SES011.gmm work/lpcc/BLOCK01/SES011/*
       plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/mfcc/SES011.gmm work/mfcc/BLOCK01/SES011/*
     ```
   + ¿Cuál de ellas le parece que contiene más información?
-  Como podemos observar la que contiene mas informacion es la de lcpp ya que los puntos estan menos correlados, ya que por ejemplo en la lp los puntos forman como una 	 linea lo que significa que estan mas correlados.
+ En nuestro caso podemos observar que la que contiene mas informacion es la de mfcc seguida de lpcc ya que los puntos estan menos correlados. En el caso de lp vemos 
+ que los puntos forman como una tendencia lineal lo que significa que estan mas correlados.
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
 
   |                        | LP   | LPCC | MFCC |
   |------------------------|:----:|:----:|:----:|
-  | &rho;<sub>x</sub>[2,3] |      |      |      |
+  | &rho;<sub>x</sub>[2,3] |   -0,814   |  0,312    |   0,359   |
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
+  Estos resultado coinciden mas o menos con las graficas ya que vemos que mfcc y lpcc tienen valores muy cercanos a cero, es decir poco correlados mientras que para 
+  mfcc, obtenemos un valor bastante alejado de 0 lo que significa que esta mucho mas correlado.
   
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
+- Para lpcc y mfcc los valores mas usados son entre 15 y 18 mientras que para lp se suelen usar unos 9 parametros.
 
 ### Entrenamiento y visualización de los GMM.
 
@@ -107,10 +113,17 @@ Complete el código necesario para entrenar modelos GMM.
 
 - Inserte una gráfica que muestre la función de densidad de probabilidad modelada por el GMM de un locutor
   para sus dos primeros coeficientes de MFCC.
+  ![GMM_LPCC_loc2](https://user-images.githubusercontent.com/100692201/170891396-6dc15439-0076-4637-8fb4-358aa706b334.jpeg)
+
   
 - Inserte una gráfica que permita comparar los modelos y poblaciones de dos locutores distintos (la gŕafica
   de la página 20 del enunciado puede servirle de referencia del resultado deseado). Analice la capacidad
   del modelado GMM para diferenciar las señales de uno y otro.
+  
+  ![GMM_LPCC](https://user-images.githubusercontent.com/100692201/170891407-ee0ba5a8-0667-44ce-a371-89739cefbf8a.jpeg)
+  
+  ![GMM_LPCC_loc2](https://user-images.githubusercontent.com/100692201/170891397-fb862e58-5345-46c8-a974-fb462c2ea918.jpeg)
+Como podemos observar las distribuciones son bastante parecidas pero aun asi cada modelo de GMM se ajusta perfectamente a cada locutor
 
 ### Reconocimiento del locutor.
 
