@@ -53,10 +53,9 @@ texto, usando sox +fa, y contando el número de líneas, con el comando de UNIX 
   * ¿Por qué es conveniente usar este formato (u otro parecido)? Tenga en cuenta cuál es el formato de
     entrada y cuál es el de resultado.
     
-  Los datos ya estan guardados como float32 y no como ascii, esto hace que no se tengan que convertir cada vez que se vaya a leer el fichero. Ademas una 
-  vez obtenidos las características de SPTK los cambios son solo añadir una cabecera por lo tanto hace el programa mas eficiente.
+  Este formato nos permite tener organizado los datos del fichero de tal manera que cada fila es una 
+  trama y cada columna son los coeficientes de las señales. 
     
-
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
   
