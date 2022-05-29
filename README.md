@@ -88,6 +88,7 @@ sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WIND
       plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/mfcc/SES011.gmm work/mfcc/BLOCK01/SES011/*
     ```
   + ¿Cuál de ellas le parece que contiene más información?
+  Como podemos observar la que contiene mas informacion es la de lcpp ya que los puntos estan menos correlados, ya que por ejemplo en la lp los puntos forman como una 	 linea lo que significa que estan mas correlados.
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
