@@ -53,23 +53,40 @@ texto, usando sox +fa, y contando el número de líneas, con el comando de UNIX 
   * ¿Por qué es conveniente usar este formato (u otro parecido)? Tenga en cuenta cuál es el formato de
     entrada y cuál es el de resultado.
     
-  Este formato nos permite tener organizado los datos del fichero de tal manera que cada fila es una 
-  trama y cada columna son los coeficientes de las señales. 
+  Este formato nos permite tener bien organizados los datos del fichero de tal manera que cada fila es una trama y las columnas son 
+  los coeficientes de las señales. De esta manera tambien nos sera facil comparar los resultados distintos para un mismo coeficiente.
     
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
+  ```
+  sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 |
+	$LPC -l 240 -m $lpc_order | $LPCC -m $lpc_order -M $lpcc_order > $base.lpcc
+  ```
   
-
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales en escala Mel (MFCC) en su
   fichero <code>scripts/wav2mfcc.sh</code>:
+```
+sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 |
+	$MFCC -l 240 -m $mfcc_order -n $melbank_order > $base.mfcc
+```
+
 
 ### Extracción de características.
 
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
   
+  ![GMM_LP](https://user-images.githubusercontent.com/100692201/170885927-d52860c4-ece3-4e55-a0e0-84165e6756e4.jpeg)
+![GMM_LPCC](https://user-images.githubusercontent.com/100692201/170885977-ac50d4ee-65a4-4b22-aa6f-b0ec343ee4d7.jpeg)
+![GMM_MFCC](https://user-images.githubusercontent.com/100692201/170885984-bae382ba-4fe1-4a4e-b373-e8b68642437a.jpeg)
+
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
+    ```
+     plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/lp/SES011.gmm work/lp/BLOCK01/SES011/*
+      plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/lpcc/SES011.gmm work/lpcc/BLOCK01/SES011/*
+      plot_gmm_feat -x 2 -y 3 -p 99,50,10,1 -g green work/gmm/mfcc/SES011.gmm work/mfcc/BLOCK01/SES011/*
+    ```
   + ¿Cuál de ellas le parece que contiene más información?
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
